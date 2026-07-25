@@ -351,7 +351,7 @@ boxplot(serieHR,
 
 O boxplot confirma a presença de diversos valores acima do limite superior de Tukey. Entretanto, esses valores são compatíveis com a dinâmica fisiológica da frequência cardíaca ao longo do dia e, portanto, não foram considerados erros experimentais.
 
-### Síntese da Análise Descritiva  
+#### Síntese da Análise Descritiva  
 
 A análise descritiva permitiu compreender o comportamento geral da frequência cardíaca ao longo do período observado. Entretanto, por se tratar de uma variável registrada sequencialmente no tempo, medidas descritivas isoladas não são suficientes para caracterizar completamente sua dinâmica. Assim, na próxima etapa será investigada a estrutura temporal da série, avaliando-se a presença de tendência, sazonalidade e dependência temporal, etapas fundamentais para a construção de modelos de previsão.
 
@@ -457,3 +457,95 @@ A linha azul representa a média móvel de 5 minutos. Ela filtra esses picos rá
 **Vales de Repouso/Sono (Horas 12 a 16):** Queda acentuada para a casa dos 60 bpm, com baixíssima oscilação, caracterizando o estado de repouso noturno e sono profundo.
 
 **Fase de Despertar (Horas 17 a 18):** Reativação fisiológica expressiva, com a frequência subindo rapidamente rumo aos picos mais altos do registro.
+
+
+## Modelagem e Previsão
+
+```{r}
+library(forecast)
+
+# 1. Preparação da Série Temporal (Frequência = 300 para ciclos de 5 min)
+dados_hr <- na.omit(listaHeartRate_Filtrada[[1]]$HR)
+serieHR_ts <- ts(dados_hr, frequency = 300)
+
+# 2. Divisão da Base em Treino (80%) e Teste (20%)
+n_total  <- length(serieHR_ts)
+n_treino <- round(0.80 * n_total)
+n_teste  <- n_total - n_treino
+
+treino <- window(serieHR_ts, end = c(1, n_treino))
+teste  <- window(serieHR_ts, start = c(1, n_treino + 1))
+
+# ----------------------------------------------------------------------
+# 3. Ajuste dos Modelos de Suavização Exponencial
+# ----------------------------------------------------------------------
+
+# Modelo 1: Suavização Exponencial Simples (SES)
+modelo_ses <- ses(treino, h = n_teste)
+
+# Modelo 2: Método de Holt (Tendência)
+modelo_holt <- holt(treino, h = n_teste)
+
+# Modelo 3: Método de Holt-Winters (Usando a função nativa do R Base)
+fit_hw <- HoltWinters(treino, seasonal = "additive")
+modelo_hw <- forecast(fit_hw, h = n_teste)
+
+# ----------------------------------------------------------------------
+# 4. Avaliação e Comparação de Desempenho (Métricas)
+# ----------------------------------------------------------------------
+acc_ses  <- accuracy(modelo_ses, teste)
+acc_holt <- accuracy(modelo_holt, teste)
+acc_hw   <- accuracy(modelo_hw, teste)
+
+# Tabela comparativa no conjunto de Teste
+tabela_metricas <- data.frame(
+  Modelo = c("SES (Simples)", "Holt (Tendência)", "Holt-Winters (Sazonal)"),
+  RMSE   = c(acc_ses[2, "RMSE"],  acc_holt[2, "RMSE"],  acc_hw[2, "RMSE"]),
+  MAE    = c(acc_ses[2, "MAE"],   acc_holt[2, "MAE"],   acc_hw[2, "MAE"]),
+  MAPE   = c(acc_ses[2, "MAPE"],  acc_holt[2, "MAPE"],  acc_hw[2, "MAPE"])
+)
+
+# Exibe a tabela no console
+print(tabela_metricas)
+
+# ----------------------------------------------------------------------
+# 5. Gráfico de Previsão em R Base
+# ----------------------------------------------------------------------
+
+# Definindo limites do eixo Y
+ylim_range <- range(c(as.numeric(treino), as.numeric(teste), 
+                      as.numeric(modelo_ses$mean), 
+                      as.numeric(modelo_holt$mean), 
+                      as.numeric(modelo_hw$mean)))
+
+# Plot do treino
+plot(1:n_treino, as.numeric(treino), 
+     xlim = c(1, n_total), 
+     ylim = ylim_range,
+     type = "l", 
+     col = "gray60", 
+     xlab = "Instantes de Tempo (Segundos)", 
+     ylab = "Frequência Cardíaca (bpm)",
+     main = "Previsão dos Modelos de Suavização Exponencial")
+
+# Adiciona os dados reais de Teste
+lines((n_treino + 1):n_total, as.numeric(teste), col = "black", lwd = 1.2)
+
+# Adiciona as linhas de previsão dos 3 modelos
+lines((n_treino + 1):n_total, as.numeric(modelo_ses$mean), col = "blue", lwd = 2)
+lines((n_treino + 1):n_total, as.numeric(modelo_holt$mean), col = "orange", lwd = 2)
+lines((n_treino + 1):n_total, as.numeric(modelo_hw$mean), col = "red", lwd = 2)
+
+# Linha tracejada onde começa a previsão
+abline(v = n_treino, col = "darkgreen", lty = 2, lwd = 1.5)
+
+# Legenda R Base
+legend("topleft", 
+       legend = c("Treino", "Teste Real", "SES", "Holt", "Holt-Winters"),
+       col = c("gray60", "black", "blue", "orange", "red"),
+       lty = 1, 
+       lwd = c(1, 1.2, 2, 2, 2),
+       bty = "n", 
+       cex = 0.8)
+```
+

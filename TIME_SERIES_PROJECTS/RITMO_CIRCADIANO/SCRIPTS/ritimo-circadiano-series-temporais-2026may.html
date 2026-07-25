@@ -160,7 +160,7 @@ window.Quarto = {
 <li><p>Vector Magnitude - intensidade total do movimento</p></li>
 <li><p>Os dados são de 23h 35min, o tempo é medido em segundos.</p></li>
 </ul>
-<p><strong>OBS:</strong>O experimento abrangeu um período total de 23h 35min de acompanhamento contínuo (das 10:10 AM do Dia 1 às 09:45 AM do Dia 2). Contudo, devido a eventuais desconexões inerentes a sensores de monitoramento de frequência cardíaca, foram contabilizados 67.936 segundos efetivos de registro (aproximadamente 18,8 horas de dados ativos).</p>
+<p><strong>OBS:</strong> O experimento abrangeu um período total de 23h 35min de acompanhamento contínuo (das 10:10 AM do Dia 1 às 09:45 AM do Dia 2). Contudo, devido a eventuais desconexões inerentes a sensores de monitoramento de frequência cardíaca, foram contabilizados 67.936 segundos efetivos de registro (aproximadamente 18,8 horas de dados ativos).</p>
 <p>Primeiro vamos analisar a frequência cardíaca que está na coluna HR. Junto com ela a coluna Gender (Gênero) e Age (idade) do user_info.csv, para calcular o HR máx.</p>
 <div class="cell">
 <details class="code-fold">
@@ -670,10 +670,10 @@ User_21 User_22
 </div>
 <p>O boxplot confirma a presença de diversos valores acima do limite superior de Tukey. Entretanto, esses valores são compatíveis com a dinâmica fisiológica da frequência cardíaca ao longo do dia e, portanto, não foram considerados erros experimentais.</p>
 </section>
-</section>
-<section id="síntese-da-análise-descritiva" class="level3">
-<h3 class="anchored" data-anchor-id="síntese-da-análise-descritiva">Síntese da Análise Descritiva</h3>
+<section id="síntese-da-análise-descritiva" class="level4">
+<h4 class="anchored" data-anchor-id="síntese-da-análise-descritiva">Síntese da Análise Descritiva</h4>
 <p>A análise descritiva permitiu compreender o comportamento geral da frequência cardíaca ao longo do período observado. Entretanto, por se tratar de uma variável registrada sequencialmente no tempo, medidas descritivas isoladas não são suficientes para caracterizar completamente sua dinâmica. Assim, na próxima etapa será investigada a estrutura temporal da série, avaliando-se a presença de tendência, sazonalidade e dependência temporal, etapas fundamentais para a construção de modelos de previsão.</p>
+</section>
 </section>
 <section id="a-série-possui-tendência" class="level3">
 <h3 class="anchored" data-anchor-id="a-série-possui-tendência">A Série possui Tendência?</h3>
@@ -787,6 +787,114 @@ User_21 User_22
 <p><strong>Vales de Repouso/Sono (Horas 12 a 16):</strong> Queda acentuada para a casa dos 60 bpm, com baixíssima oscilação, caracterizando o estado de repouso noturno e sono profundo.</p>
 <p><strong>Fase de Despertar (Horas 17 a 18):</strong> Reativação fisiológica expressiva, com a frequência subindo rapidamente rumo aos picos mais altos do registro.</p>
 </section>
+</section>
+<section id="modelagem-e-previsão" class="level2">
+<h2 class="anchored" data-anchor-id="modelagem-e-previsão">Modelagem e Previsão</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Preparação da Série Temporal (Frequência = 300 para ciclos de 5 min)</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>dados_hr <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(listaHeartRate_Filtrada[[<span class="dv">1</span>]]<span class="sc">$</span>HR)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>serieHR_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dados_hr, <span class="at">frequency =</span> <span class="dv">300</span>)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Divisão da Base em Treino (80%) e Teste (20%)</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>n_total  <span class="ot">&lt;-</span> <span class="fu">length</span>(serieHR_ts)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>n_treino <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">0.80</span> <span class="sc">*</span> n_total)</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>n_teste  <span class="ot">&lt;-</span> n_total <span class="sc">-</span> n_treino</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>treino <span class="ot">&lt;-</span> <span class="fu">window</span>(serieHR_ts, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">1</span>, n_treino))</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>teste  <span class="ot">&lt;-</span> <span class="fu">window</span>(serieHR_ts, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, n_treino <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Ajuste dos Modelos de Suavização Exponencial</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo 1: Suavização Exponencial Simples (SES)</span></span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>modelo_ses <span class="ot">&lt;-</span> <span class="fu">ses</span>(treino, <span class="at">h =</span> n_teste)</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo 2: Método de Holt (Tendência)</span></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>modelo_holt <span class="ot">&lt;-</span> <span class="fu">holt</span>(treino, <span class="at">h =</span> n_teste)</span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo 3: Método de Holt-Winters (Usando a função nativa do R Base)</span></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>fit_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(treino, <span class="at">seasonal =</span> <span class="st">"additive"</span>)</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit_hw, <span class="at">h =</span> n_teste)</span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Avaliação e Comparação de Desempenho (Métricas)</span></span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>acc_ses  <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(modelo_ses, teste)</span>
+<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>acc_holt <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(modelo_holt, teste)</span>
+<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>acc_hw   <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(modelo_hw, teste)</span>
+<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabela comparativa no conjunto de Teste</span></span>
+<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a>tabela_metricas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="fu">c</span>(<span class="st">"SES (Simples)"</span>, <span class="st">"Holt (Tendência)"</span>, <span class="st">"Holt-Winters (Sazonal)"</span>),</span>
+<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE   =</span> <span class="fu">c</span>(acc_ses[<span class="dv">2</span>, <span class="st">"RMSE"</span>],  acc_holt[<span class="dv">2</span>, <span class="st">"RMSE"</span>],  acc_hw[<span class="dv">2</span>, <span class="st">"RMSE"</span>]),</span>
+<span id="cb47-40"><a href="#cb47-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">MAE    =</span> <span class="fu">c</span>(acc_ses[<span class="dv">2</span>, <span class="st">"MAE"</span>],   acc_holt[<span class="dv">2</span>, <span class="st">"MAE"</span>],   acc_hw[<span class="dv">2</span>, <span class="st">"MAE"</span>]),</span>
+<span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">MAPE   =</span> <span class="fu">c</span>(acc_ses[<span class="dv">2</span>, <span class="st">"MAPE"</span>],  acc_holt[<span class="dv">2</span>, <span class="st">"MAPE"</span>],  acc_hw[<span class="dv">2</span>, <span class="st">"MAPE"</span>])</span>
+<span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe a tabela no console</span></span>
+<span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tabela_metricas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Modelo     RMSE       MAE      MAPE
+1          SES (Simples)  29.7320  21.40571  21.94755
+2       Holt (Tendência)  40.6628  31.36681  33.46707
+3 Holt-Winters (Sazonal) 183.5360 156.20969 179.57535</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Gráfico de Previsão em R Base</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Definindo limites do eixo Y</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>ylim_range <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">c</span>(<span class="fu">as.numeric</span>(treino), <span class="fu">as.numeric</span>(teste), </span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">as.numeric</span>(modelo_ses<span class="sc">$</span>mean), </span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">as.numeric</span>(modelo_holt<span class="sc">$</span>mean), </span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">as.numeric</span>(modelo_hw<span class="sc">$</span>mean)))</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot do treino</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span>n_treino, <span class="fu">as.numeric</span>(treino), </span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, n_total), </span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> ylim_range,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, </span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"gray60"</span>, </span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Instantes de Tempo (Segundos)"</span>, </span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Previsão dos Modelos de Suavização Exponencial"</span>)</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona os dados reais de Teste</span></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>((n_treino <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total, <span class="fu">as.numeric</span>(teste), <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">1.2</span>)</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona as linhas de previsão dos 3 modelos</span></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>((n_treino <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total, <span class="fu">as.numeric</span>(modelo_ses<span class="sc">$</span>mean), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>((n_treino <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total, <span class="fu">as.numeric</span>(modelo_holt<span class="sc">$</span>mean), <span class="at">col =</span> <span class="st">"orange"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>((n_treino <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total, <span class="fu">as.numeric</span>(modelo_hw<span class="sc">$</span>mean), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Linha tracejada onde começa a previsão</span></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> n_treino, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Legenda R Base</span></span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, </span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treino"</span>, <span class="st">"Teste Real"</span>, <span class="st">"SES"</span>, <span class="st">"Holt"</span>, <span class="st">"Holt-Winters"</span>),</span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"gray60"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>),</span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>, </span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">"n"</span>, </span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 
 </main>
