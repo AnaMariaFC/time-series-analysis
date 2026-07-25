@@ -1,4 +1,0 @@
-"0","serieHR2 <- ts(na.omit(listaHeartRate_Filtrada[[1]]$HR))"
-"0",""
-"0","acf(serieHR2,"
-"0","    main = ""Função de Autocorrelação"")"

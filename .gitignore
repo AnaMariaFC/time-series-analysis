@@ -1,0 +1,10 @@
+# Arquivos do R / RStudio
+.RData
+.Rhistory
+.Rproj.user/
+
+# Arquivos compactados e bases pesadas
+*.zip
+
+# Arquivos gerados por renderização (Quarto/RMarkdown)
+*_files/

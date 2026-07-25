@@ -1,8 +1,0 @@
-"0","# Análise Exploratória do user_info.csv"
-"0",""
-"0","# Conta quantos valores ""NA"" existem no seu arquivo"
-"0","sum(is.na(listaInfoUsers[[1]]))"
-"1","[1]"
-"1"," 0"
-"1","
-"

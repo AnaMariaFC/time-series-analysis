@@ -1,6 +1,0 @@
-"0",""
-"0","# Gráfico com ajuste e previsão"
-"0","plot(modelo_holt,"
-"0","     main = ""Suavização Exponencial de Holt - PIB per capita"","
-"0","     xlab = ""Tempo"","
-"0","     ylab = ""PIB per capita"")"

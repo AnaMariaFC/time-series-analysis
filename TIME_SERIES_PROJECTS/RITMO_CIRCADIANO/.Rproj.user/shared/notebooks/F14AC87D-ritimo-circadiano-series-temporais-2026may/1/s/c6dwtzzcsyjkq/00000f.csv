@@ -1,4 +1,0 @@
-"0","# Instalando pacotes"
-"0",""
-"0","#install.packages(""forecast"")"
-"0","library(forecast)"
