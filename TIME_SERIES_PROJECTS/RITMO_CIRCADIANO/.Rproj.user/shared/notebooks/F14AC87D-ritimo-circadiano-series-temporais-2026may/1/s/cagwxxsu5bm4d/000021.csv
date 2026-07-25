@@ -1,0 +1,4 @@
+"0",""
+"0","sequencia_horas <- c(sequencia_horas, round(max(tempo_horas), 2))"
+"0",""
+"0","axis(side = 1, at = sequencia_horas)"

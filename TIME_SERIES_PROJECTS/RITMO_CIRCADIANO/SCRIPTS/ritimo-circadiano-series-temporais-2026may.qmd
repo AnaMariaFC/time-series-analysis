@@ -1,0 +1,459 @@
+---
+title: "Estudo do Rítimo Circadiano"
+author: "Ana Maria F Costa"
+format: 
+  html:
+    code-fold: true
+    code-summary: "Clique aqui para ver o código"
+editor: visual
+---
+
+## Introdução
+
+O banco de dados foi tirado do site da PhysioNet, seque link: <https://physionet.org/content/mmash/1.0.0/> . É um site inteiro com banco de dados de "sinais fisolígicos complexos", como é dito no site. É mantido pelos: Laboratório de Fisiologia Computacional do MIT, apoiado pelo Instituto Nacional de Imagens Biomédicas e Bioengenharia (NIBIB), e pelo, Instituto Nacional do Coração, Pulmão e Sangue (NHLBI).
+
+O dataset é o do "Monitoramento multinível da atividade e do sono em pessoas saudáveis", só com 22 homens.
+
+A análise é feita pelo ActiGraph wGT3X-BT. Um **actigraph** é um dispositivo vestível que mede: movimento corporal, atividade física, padrões de sono e repouso. Eles detectam o movimento, a intensidade, a postura e a direção. Na prática é tipo um smartwatch científico.
+
+### Primeira análise:
+
+- movimento corporal
+
+- atividade física
+
+- padrões de sono
+
+- repouso
+
+#### As variáveis medem:
+
+- Axis1/2/3 - aceleração nos eixos
+
+- Steps - passos
+
+- HR - frequência cardíaca
+
+- Inclinometer - posição corporal
+
+- Vector Magnitude - intensidade total do movimento
+
+- Os dados são de 23h 35min, o tempo é medido em segundos.
+
+**OBS:** O experimento abrangeu um período total de 23h 35min de acompanhamento contínuo (das 10:10 AM do Dia 1 às 09:45 AM do Dia 2). Contudo, devido a eventuais desconexões inerentes a sensores de monitoramento de frequência cardíaca, foram contabilizados 67.936 segundos efetivos de registro (aproximadamente 18,8 horas de dados ativos).
+
+Primeiro vamos analisar a frequência cardíaca que está na coluna HR. Junto com ela a coluna Gender (Gênero) e Age (idade) do user_info.csv, para calcular o HR máx.
+
+```{r}
+# Importando os dados:
+
+# 1. Criando os caminhos dos arquivos de forma limpa
+caminhos_actigraph <- paste0("/home/delfos/Documentos/UEPB_2026jun28/PEDRO_MONTEIRO/TIME_SERIES_ANALYSIS/TIME_SERIES_PROJECTS/RITMO_CIRCADIANO/DATA/DB/DataPaper/user_", 1:22, "/Actigraph.csv")
+
+caminhos_info <- paste0("/home/delfos/Documentos/UEPB_2026jun28/PEDRO_MONTEIRO/TIME_SERIES_ANALYSIS/TIME_SERIES_PROJECTS/RITMO_CIRCADIANO/DATA/DB/DataPaper/user_", 1:22, "/user_info.csv")
+
+#Carregando as listas SEM usar o laço FOR (Muito mais seguro)
+listaHeartRate <- lapply(caminhos_actigraph, read.csv)
+listaInfoUsers <- lapply(caminhos_info, read.csv)
+
+```
+
+```{r}
+# Verificando os dados do Actigraph.csv
+
+View(listaHeartRate[[1]])
+str(listaHeartRate[[1]])  #Por aqui sei a quant de observações e variáveis e o tipo.
+names(listaHeartRate[[1]])
+#Nomes das colunas.
+#Por aqui sei que os dados estão em dias/horas até segundos.
+```
+
+```{r}
+#| results: "hide"
+#| 
+# Verificando os dados do user_info.csv
+
+View(listaInfoUsers[[1]])
+str(listaInfoUsers[[1]])  #Por aqui sei a quant de observações e variáveis e o tipo.
+names(listaInfoUsers[[1]])
+#Nomes das colunas.
+#Por aqui sei que os dados estão em dias/horas até segundos.
+```
+
+```{r}
+#| results: "hide"
+#| 
+# Análise Exploratória do Actigraph.csv
+
+# Conta quantos valores "NA" existem no seu arquivo
+sum(is.na(listaHeartRate[[1]]))
+# Estatística Descritiva
+lapply(listaHeartRate,summary)
+# Só col HR
+lapply(listaHeartRate,function(x) summary(x$HR))
+```
+
+```{r}
+# Análise Exploratória do user_info.csv
+
+# Conta quantos valores "NA" existem no seu arquivo
+sum(is.na(listaInfoUsers[[1]]))
+
+# Forçando o R a pegar APENAS a primeira linha de cada user_info 
+# (Isso mata qualquer linha em branco extra que esteja gerando os NAs no rbind)
+listaInfoUsers_limpa <- lapply(listaInfoUsers, function(df) df[1, , drop = FALSE])
+
+# Empilhando rows
+descritiva_info_users<-do.call(rbind,listaInfoUsers_limpa)
+#do.call
+#rbind = row binb = juntar linhas
+
+summary(descritiva_info_users)
+
+#Quem tem Age=0 ?
+descritiva_info_users[descritiva_info_users$Age==0,]
+#User18
+
+# Substituindo o 0 por 27 (mediana)
+descritiva_info_users$Age[descritiva_info_users$Age == 0] <- 27
+
+descritiva_info_users
+
+summary(descritiva_info_users)
+# Age min = 20 OK
+```
+
+No User 18 a coluna idade está 0. Coloquei a mediana das idades (27 anos), pois precisarei calcular o HR_máx, o cálculo é dado pela idade.
+
+Olhando para as estatísticas descritivas do HR (Heart Rate = Frequência cardíaca) há alguns erros de amplitude.
+
+- Mínimos absurdos: O *User 3*, *User 5*, *User 9* e o *User 19* apresentam mín de 3 bpm. O *User 10* tem mínimo de 8 bpm. O *User 2* tem mínimo de 10 bpm.
+
+  OBS: Nosso coração tem de 60 à 100 bpm em repouso, sendo um adulto saudável médio. E de 40 à 60 bpm em atletas ou pessoas com bom condicionamento físico. O coração é mais eficiente, ele bombeia mais sangue por batimento. **Valores de alerta:** Abaixo de 50 bpm em não-atletas (Bradicardia) ou acima de 100 bpm constantemente (Taquicardia) merecem investigação médica.
+
+- Máximos absurdos:
+
+  Terei que calcular com a idade a frequência máx para cortar os outliers. Para cada indivíduo haverá um HR máx diferente.
+
+  Estão divididos em:
+
+  - Repouso
+  - Zona 1 (Leve)
+  - Zona 2 (Moderada)
+  - Zona 3 (Aeróbica)
+  - Zona 4 (Limiar)
+  - Zona 5 (Máxima)
+
+```{r}
+  # Calculando O HR máx de cada users.
+  # Zona(repouso/exercícios)
+  listaHeartRate_comZonas<-lapply(1:22,function(i){
+    # Extrai o df só do user i do momento.
+    dfActigraph<-listaHeartRate[[i]]
+    # Extrai o df só do user i do momento.
+    dfInfo<-listaInfoUsers[[i]]
+    # [1] é pq tem só 1 line
+    idadesUsers<-dfInfo$Age[1]
+    # Calculando o HR máx teórico
+    hrMaxTeorico<-208-(0.7*idadesUsers)
+    # Criando as novas colunas no df HR
+    dfActigraph$HR_Max<-hrMaxTeorico
+    dfActigraph$Esforco_por_cento<-(dfActigraph$HR/hrMaxTeorico)*100
+    # Classifica as zonas usando a função cut()
+    dfActigraph$Zona_Treino <- cut(
+      dfActigraph$Esforco_por_cento,
+      breaks = c(-Inf, 50, 60, 70, 80, 90, Inf),
+      labels = c("Repouso", "Zona 1 (Leve)", "Zona 2 (Moderada)",
+                 "Zona 3 (Aeróbica)", "Zona 4 (Limiar)", "Zona 5 (Máxima)"),
+      right = TRUE
+    )
+    # Colocando tudo no seu lugar de volta
+    return(dfActigraph)
+  })
+  # Dando nomes as listas
+    names(listaHeartRate_comZonas)<-paste0("User_",1:22)
+```
+
+```{r}
+# Vizualizando
+#View(listaHeartRate_comZonas)
+#View(listaHeartRate_comZonas[[7]])
+```
+
+Foi criado mais três colunas:\
+- HR_max (a frequência cardíaca máxima) - Esforco_por_cento (a porcentagem do HR, vizualiza melhor o quanto de esforço o indivíduo faz) - Zona_Treino\
+- Repouso - Zona 1 (Leve) - Zona 2 (Moderada) - Zona 3 (Aeróbica) - Zona 4 (Limiar) - Zona 5 (Máxima)
+
+```{r}
+listaHeartRate_Filtrada<-lapply(listaHeartRate_comZonas,function(df){
+  # Filtra o HR memor que 35 e maior que o HR_Max calculado
+  df$HR[df$HR < 35 | df$HR > df$HR_Max] <- NA
+  return(df)
+})
+
+# Resumo descritivo da coluna HR para cada um dos 22 usuários de uma vez só:
+resumo_geral <- do.call(rbind, lapply(listaHeartRate_Filtrada, function(df) {
+  summary(df$HR)
+}))
+rownames(resumo_geral) <- names(listaHeartRate_Filtrada)
+# Exibe uma tabela limpa com Min, Max, Média de todos
+print(resumo_geral)
+```
+
+A análise exploratória revelou artefatos de medição severos nos dados de frequência cardíaca bruta (com registros implausíveis variando de 3 a 8 bpm). Após a aplicação de um filtro fisiológico (limiar inferior de 35 bpm e superior baseado no $HR_{máx}$ teórico de cada indivíduo), observou-se uma perda de dados proeminente em usuários específicos, com destaque para o User_15 (1.450 dados omissos). Essa perda é atribuída a limitações práticas no acoplamento da cinta peitoral necessária para o registro de HR no dispositivo ActiGraph wGT3X-BT, causadas por deslocamento mecânico durante o sono ou perda temporária de condutividade elétrica na pele.
+
+#### Corrigindo...
+
+Como a quantidade de NAs perto do total de dados (67.936) é muito pequena (1.450 não chega a 2% do total do User 15), nós podemos imputar esses dados (preencher os vazios) usando uma técnica de séries temporais chamada LOCF (Last Observation Carried Forward), que basicamente repete o último valor válido até o sensor voltar a funcionar.
+
+```{r}
+# Corrigindo os NAs
+listaHeartRate_LOCF <- lapply(listaHeartRate_Filtrada, function(df){
+
+  hr <- df$HR
+
+  # Preenche cada NA com o último valor válido
+  for(i in 2:length(hr)){
+    if(is.na(hr[i])){
+      hr[i] <- hr[i-1]
+    }
+  }
+
+  df$HR <- hr
+
+  df
+})
+```
+
+```{r}
+# Conferindo
+sapply(listaHeartRate_LOCF, function(df){
+  sum(is.na(df$HR))
+})
+```
+
+
+## Série Temporal
+
+Pacote utilizado:
+
+- Forecast: O pacote forecast (que significa "previsão", em inglês) é um dos pacotes mais famosos e robustos do R para análise e modelagem de séries temporais. Ele foi desenvolvido por Rob J. Hyndman, uma das maiores autoridades mundiais no assunto.
+
+Em resumo, ele serve para duas grandes missões: entender o passado (analisar o comportamento da série) e prever o futuro (fazer projeções).
+
+```{r}
+# Instalando pacotes
+
+#install.packages("forecast")
+library(forecast)
+```
+
+```{r}
+# 1. Extrai o dataframe da lista
+df_hr <- listaHeartRate_Filtrada[[1]]
+
+# 2. Prepara a linha do tempo contínua
+data_base <- as.Date("2026-01-01")
+string_data_hora <- paste(data_base + (df_hr$day - 1), df_hr$time)
+tempo_completo <- as.POSIXct(string_data_hora, format = "%Y-%m-%d %H:%M:%S")
+
+# 3. Define os marcadores de início e fim
+inicio <- min(tempo_completo)
+fim    <- max(tempo_completo)
+marcas_eixo <- c(inicio, seq(inicio, fim, by = "1 hour"), fim)
+
+# 4. Desenha o gráfico (plot.new é chamado AQUI!)
+plot(x = tempo_completo,
+     y = df_hr$HR,
+     type = "l",
+     col = "#2B5C8F", 
+     lwd = 0.8,  
+     las = 1,  
+     bty = "l",  
+     xaxt = "n", # Esconde o eixo X automático
+     xlab = "Horário (HH:MM)",
+     ylab = "Frequência Cardíaca (bpm)",
+     main = "Série temporal da frequência cardíaca")
+
+# 5. Adiciona o eixo X customizado (com início e fim)
+axis.POSIXct(side = 1, 
+             at = marcas_eixo, 
+             format = "%H:%M", 
+             las = 1)
+
+# 6. Adiciona a grade logo em seguida (enquanto o gráfico está ativo)
+grid(nx = NULL, ny = NULL, col = "gray85", lty = "dotted")
+```
+
+
+### Estatística Descritiva da Série Temporal  
+
+O mínimo bpm registrado é de 53, que é compatível com um estado de repouso. A  máxima bpm foi de 177, que é compatível com práticas de exercício físico intenso. A mediana foi de 86 bpm, como ela é um valor que divide os dados no meio, podemos concluir que ela está monstando a tendência central do ciclo de batimentos cardíacos. Com a média de 84,72 bpm, um valor quase igual a mediana,observa-se que a distribuição da frequência cardíaca é aproximadamente simétrica, reforça mais ainda que a tendência do ciclo se cencontrar em torno de $(86+84.72)/2=85,36$.
+
+Um jeito melhor de tiramos uma faixa central como sendo uma "*zona habitual de vigília*", o nosso modo acordado, é olhando para o IQR (Inter Quartile Range ou Intervalo Interquartil) pois representa os 50% centrais dos dados. Que vai de $Q_1$ = 70 bpm a $Q_3$ = 97 bpm.  Logo, a zona habitual de vigília oscila em 27 valores de batimentos.
+Com isso podemos tirar conclusões que abaixo do $Q_1$ de 70bpm pode indicar um estado de repouso e atividades de baixa intensidade. E acima do $Q_3$ de 97bpm pode indicar atividades de maior demanda como: uma caminhada até a parada do ônibus, uma ansiedade, uma subida as escadas, uma xícara de café,etc.
+
+É considerado um outlier (ou dado discrepante) de acordo com a regra clássica do Boxplot de Tukey, fences rules (regra das cercas), se:
+$$\text{Limite Superior} = Q_3 + (1{,}5 \times \text{IQR})$$
+Logo, valores acima de 137,5 bpm são considerados outliers. Abaixo há um saída com os outliers, pode parecer muitos valores, mas não são. Pois os dados estão em segundos e o coração vai acelerando devagar, não pula de um valor para outro.
+
+##### Abaixo os códigos com os respectivos resultados:
+
+```{r}
+# Estatística Descritiva da Série Temporal
+# Recria a série temporal a partir do seu dataframe original
+serieHR <- ts(listaHeartRate_Filtrada[[1]]$HR, frequency = 1)
+
+summary(serieHR)
+
+# Desvio Padrão
+sd(serieHR,na.rm=TRUE)  #Ignora os NAs e faz os cálculos!
+
+# Intervalo Interquartil
+iqr<-IQR(serieHR,na.rm=TRUE);iqr #Ignora os NAs e faz o cálculo!
+
+q3<-quantile(serieHR,probs = 0.75,na.rm=TRUE);q3
+
+# Outlier "fences rules"
+limite_superior<-q3+1.5*iqr;limite_superior
+
+# Todos os valores considerados outliers
+boxplot.stats(serieHR)$out
+```
+
+```{r}
+# Histograma
+# Ajustando as margens e limites do eixo X
+hist(serieHR, 
+     main = "Distribuição da Frequência Cardíaca (serieHR)",
+     xlab = "Frequência Cardíaca (bpm)",
+     ylab = "Frequência Absoluta (Contagem)",
+     col = "#4E79A7",           # Azul moderno
+     border = "white",          # Bordas brancas limpas
+     las = 1)                  # Rótulos do eixo Y na horizontal
+```
+
+O histograma mostra concentração de observações entre aproximadamente 70 e 100 bpm, com cauda estendida para valores elevados de frequência cardíaca, refletindo episódios esporádicos de maior intensidade física.
+
+```{r}
+# BoxPlot
+boxplot(serieHR,
+        main = "Boxplot da Frequência Cardíaca",
+        ylab = "Frequência Cardíaca (bpm)",
+        col = "#81A1C1",           # Azul pastel moderno
+        border = "#2E3440",        # Bordas escuras bem definidas
+        outcol = "#BF616A",        # Outliers em vermelho/destaque
+        outpch = 19,               # Pontos preenchidos nos outliers
+        outcex = 0.8,              # Tamanho dos outliers
+        las = 1,                   # Números na horizontal no eixo Y
+        pars = list(boxwex = 0.4)) # Torna a caixa mais fina e elegante
+```
+
+O boxplot confirma a presença de diversos valores acima do limite superior de Tukey. Entretanto, esses valores são compatíveis com a dinâmica fisiológica da frequência cardíaca ao longo do dia e, portanto, não foram considerados erros experimentais.
+
+### Síntese da Análise Descritiva  
+
+A análise descritiva permitiu compreender o comportamento geral da frequência cardíaca ao longo do período observado. Entretanto, por se tratar de uma variável registrada sequencialmente no tempo, medidas descritivas isoladas não são suficientes para caracterizar completamente sua dinâmica. Assim, na próxima etapa será investigada a estrutura temporal da série, avaliando-se a presença de tendência, sazonalidade e dependência temporal, etapas fundamentais para a construção de modelos de previsão.
+
+### A Série possui Tendência?  
+
+*Existe uma tendência crescente ou decrescente ao longo do tempo?*
+
+```{r}
+# Criando os objetos
+tempo <- 1:length(serieHR)
+modelo <- lm(serieHR ~ tempo)
+
+# Ajuste de margem para o eixo Y não cortar
+par(mar = c(5, 5, 4, 2) + 0.1)
+
+# Plotando
+plot(serieHR,
+     type = "l",
+     main = "Tendência Linear da Frequência Cardíaca",
+     xlab = "Tempo (segundos)",
+     ylab = "Frequência Cardíaca (bpm)",
+     col = "#2B5C8F",  #Azul suave para os dados.
+     lwd = 0.8,
+     las = 1,  #Números na horizontal.
+     bty = "l")  #Layout sem caixa fechada.
+
+# Adiciona a grade no fundo
+grid(nx = NULL, ny = NULL, col = "gray85", lty = "dotted")
+
+# Adiciona a linha de tendência linear
+abline(modelo,
+       col = "#E15759",  #Vermelho moderno/coral
+       lwd = 2.5,
+       lty = 1)  #Linha contínua (ou use lty = 2 para tracejado)
+
+# Legenda discreta no topo
+legend("topright", 
+       legend = c("Série HR", "Tendência Linear"),
+       col = c("#2B5C8F", "#E15759"), 
+       lwd = c(1, 2.5), 
+       bty = "n")            # Sem borda na legenda
+```
+
+Mesmo observando uma oscilação grande na frequência cardiaca, a linha de tendência se encontra na horizontal mostrando uma leve inclinação, uma tendência suave na frequência cardíaca. No gráfico de 1 usuário ela sai sem tendência, com todos os 22 usuários ela já sai com uma leve tendência decrescente. Como o registro começa de 10 h 10 min e 22 seg, pode ser que essa tendência decrescente se dá ao fato de estar se aproximando da noite e do sono. Para analisar melhor vamos procurar por sazonalidades.
+
+### Existe Sazonalidade?  
+
+*A frequência cardíaca apresenta um padrão que se repete ao longo do tempo?*
+
+*Há uma tendência decrescente se aproximando da hora de dormir? E há uma tendência crescente ao acordar? Em que momento inverte?*
+
+A sazonalidade ocorre quando um padrão se repete em intervalos regulares de tempo.O ritmo circadiano é o "relógio interno" do organismo que regula as funções biológicas em ciclos de aproximadamente 24 horas. Ele faz com que a frequência cardíaca não oscile de forma totalmente aleatória: espera-se um padrão sazonal claro, com batimentos mais elevados nos horários de atividade diurna (vigília) e um declínio acentuado durante a noite (sono).
+
+```{r}
+# 1. Converte o tempo para horas decorridas
+tempo_horas <- (1:length(serieHR)) / 3600
+
+# 2. Calcula a Média Móvel de 5 minutos (300 segundos) para suavizar a sazonalidade
+media_movel_5min <- stats::filter(serieHR, rep(1/300, 300), sides = 2)
+
+# 3. Ajusta o modelo de tendência em HORAS (para desenhar a abline corretamente)
+modelo_horas <- lm(serieHR ~ tempo_horas)
+
+# 4. Gráfico de Sazonalidade / Ritmo Circadiano
+plot(tempo_horas, serieHR,
+     type = "l",
+     col = "gray75", # Série bruta em cinza claro ao fundo para não poluir
+     xlab = "Tempo Decorrido (Horas a partir das 10:10)",
+     ylab = "Frequência Cardíaca (bpm)",
+     main = "Sazonalidade Intra-diária e Ritmo Circadiano",
+     las = 1,
+     bty = "l",
+     xaxt = "n")
+
+# Adiciona a Média Móvel em destaque (Azul) para ver a curva do sono/vigília
+lines(tempo_horas, media_movel_5min, col = "#2B5C8F", lwd = 2.5)
+
+# Adiciona a linha de tendência linear ajustada para horas (Vermelho)
+abline(modelo_horas, col = "#E15759", lwd = 2, lty = 2)
+
+# Eixo X customizado de 2 em 2 horas
+axis(side = 1, at = seq(0, max(tempo_horas), by = 2))
+
+# Grade discreta
+grid(nx = NULL, ny = NULL, col = "gray85", lty = "dotted")
+
+# Legenda explicativa
+legend("topright", 
+       legend = c("Série Bruta (Segundos)", "Média Móvel (5 min)", "Tendência Linear"),
+       col = c("gray75", "#2B5C8F", "#E15759"),
+       lwd = c(1, 2.5, 2),
+       lty = c(1, 1, 2),
+       bty = "n")
+```
+
+
+A média móvel é uma das ferramentas mais clássicas e essenciais na análise de séries temporais. Para simplificar, a principal função dela é reduzir o "ruído" (as flutuações diárias ou aleatórias) para que você consiga enxergar a real tendência dos dados. Durante o dia teremos picos de estresse, xícaras de café, subir escadas, etc. Tudo isso pode causar ruídos. 
+
+A linha azul representa a média móvel de 5 minutos. Ela filtra esses picos rápidos e mostra o comportamento macro do coração. Ela ignora as pequenas variações e foca no que realmente importa: o estado geral da pessoa.
+
+**Vigília Tarde (Horas 3 a 7):** Período de atividade contínua com média mantida próxima de 100 bpm.
+
+**Vales de Repouso/Sono (Horas 12 a 16):** Queda acentuada para a casa dos 60 bpm, com baixíssima oscilação, caracterizando o estado de repouso noturno e sono profundo.
+
+**Fase de Despertar (Horas 17 a 18):** Reativação fisiológica expressiva, com a frequência subindo rapidamente rumo aos picos mais altos do registro.

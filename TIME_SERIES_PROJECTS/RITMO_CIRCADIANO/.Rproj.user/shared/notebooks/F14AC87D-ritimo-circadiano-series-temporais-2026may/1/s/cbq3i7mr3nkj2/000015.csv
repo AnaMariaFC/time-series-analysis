@@ -1,0 +1,7 @@
+"0","serieHR <- ts(listaHeartRate_Filtrada[[1]]$HR)"
+"0",""
+"0","plot(serieHR,"
+"0","     type = ""l"","
+"0","     xlab = ""Tempo (segundos)"","
+"0","     ylab = ""Frequência Cardíaca (bpm)"","
+"0","     main = ""Série temporal da frequência cardíaca"")"

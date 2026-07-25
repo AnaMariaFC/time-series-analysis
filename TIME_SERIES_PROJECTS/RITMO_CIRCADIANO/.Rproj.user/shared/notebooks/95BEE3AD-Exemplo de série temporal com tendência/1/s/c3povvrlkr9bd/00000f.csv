@@ -1,0 +1,5 @@
+"0","# Previsão dos próximos 8 trimestres"
+"0","previsao_holt <- forecast(modelo_holt, h = 8)"
+"0",""
+"0","plot(previsao_holt,"
+"0","     main=""Previsão do PIB per capita usando Holt"")"

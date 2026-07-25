@@ -1,0 +1,7 @@
+"0","library(forecast)"
+"0",""
+"0","# Modelo de Holt para série com tendência"
+"0","modelo_holt <- holt(ts_dados_tendencia)"
+"0",""
+"0","# Resumo do modelo"
+"0","modelo_holt"

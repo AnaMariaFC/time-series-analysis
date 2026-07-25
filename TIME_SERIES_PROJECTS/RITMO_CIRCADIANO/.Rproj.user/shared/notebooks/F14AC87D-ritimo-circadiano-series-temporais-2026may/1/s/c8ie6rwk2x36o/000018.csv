@@ -1,0 +1,8 @@
+"0","tempo <- 1:length(serieHR)"
+"0",""
+"0","modelo <- lm(serieHR ~ tempo)"
+"0",""
+"0","plot(serieHR,"
+"0","     type = ""l"","
+"0","     xlab = ""Tempo (Segundos)"","
+"0","     ylab = ""HR"")"

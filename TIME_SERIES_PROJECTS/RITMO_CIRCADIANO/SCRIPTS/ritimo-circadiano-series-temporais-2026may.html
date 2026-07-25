@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ana Maria F Costa">
+
+<title>Estudo do Rítimo Circadiano</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/popper.min.js"></script>
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ritimo-circadiano-series-temporais-2026may_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ritimo-circadiano-series-temporais-2026may_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ritimo-circadiano-series-temporais-2026may_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ritimo-circadiano-series-temporais-2026may_files/libs/bootstrap/bootstrap-9cdab613b390c50aaa60b5117ea501ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Estudo do Rítimo Circadiano</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ana Maria F Costa </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introdução" class="level2">
+<h2 class="anchored" data-anchor-id="introdução">Introdução</h2>
+<p>O banco de dados foi tirado do site da PhysioNet, seque link: <a href="https://physionet.org/content/mmash/1.0.0/" class="uri">https://physionet.org/content/mmash/1.0.0/</a> . É um site inteiro com banco de dados de “sinais fisolígicos complexos”, como é dito no site. É mantido pelos: Laboratório de Fisiologia Computacional do MIT, apoiado pelo Instituto Nacional de Imagens Biomédicas e Bioengenharia (NIBIB), e pelo, Instituto Nacional do Coração, Pulmão e Sangue (NHLBI).</p>
+<p>O dataset é o do “Monitoramento multinível da atividade e do sono em pessoas saudáveis”, só com 22 homens.</p>
+<p>A análise é feita pelo ActiGraph wGT3X-BT. Um <strong>actigraph</strong> é um dispositivo vestível que mede: movimento corporal, atividade física, padrões de sono e repouso. Eles detectam o movimento, a intensidade, a postura e a direção. Na prática é tipo um smartwatch científico.</p>
+<section id="primeira-análise" class="level3">
+<h3 class="anchored" data-anchor-id="primeira-análise">Primeira análise:</h3>
+<ul>
+<li><p>movimento corporal</p></li>
+<li><p>atividade física</p></li>
+<li><p>padrões de sono</p></li>
+<li><p>repouso</p></li>
+</ul>
+<section id="as-variáveis-medem" class="level4">
+<h4 class="anchored" data-anchor-id="as-variáveis-medem">As variáveis medem:</h4>
+<ul>
+<li><p>Axis1/2/3 - aceleração nos eixos</p></li>
+<li><p>Steps - passos</p></li>
+<li><p>HR - frequência cardíaca</p></li>
+<li><p>Inclinometer - posição corporal</p></li>
+<li><p>Vector Magnitude - intensidade total do movimento</p></li>
+<li><p>Os dados são de 23h 35min, o tempo é medido em segundos.</p></li>
+</ul>
+<p><strong>OBS:</strong>O experimento abrangeu um período total de 23h 35min de acompanhamento contínuo (das 10:10 AM do Dia 1 às 09:45 AM do Dia 2). Contudo, devido a eventuais desconexões inerentes a sensores de monitoramento de frequência cardíaca, foram contabilizados 67.936 segundos efetivos de registro (aproximadamente 18,8 horas de dados ativos).</p>
+<p>Primeiro vamos analisar a frequência cardíaca que está na coluna HR. Junto com ela a coluna Gender (Gênero) e Age (idade) do user_info.csv, para calcular o HR máx.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importando os dados:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Criando os caminhos dos arquivos de forma limpa</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>caminhos_actigraph <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"/home/delfos/Documentos/UEPB_2026jun28/PEDRO_MONTEIRO/TIME_SERIES_ANALYSIS/TIME_SERIES_PROJECTS/RITMO_CIRCADIANO/DATA/DB/DataPaper/user_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>, <span class="st">"/Actigraph.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>caminhos_info <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"/home/delfos/Documentos/UEPB_2026jun28/PEDRO_MONTEIRO/TIME_SERIES_ANALYSIS/TIME_SERIES_PROJECTS/RITMO_CIRCADIANO/DATA/DB/DataPaper/user_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>, <span class="st">"/user_info.csv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Carregando as listas SEM usar o laço FOR (Muito mais seguro)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>listaHeartRate <span class="ot">&lt;-</span> <span class="fu">lapply</span>(caminhos_actigraph, read.csv)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>listaInfoUsers <span class="ot">&lt;-</span> <span class="fu">lapply</span>(caminhos_info, read.csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os dados do Actigraph.csv</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(listaHeartRate[[<span class="dv">1</span>]])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(listaHeartRate[[<span class="dv">1</span>]])  <span class="co">#Por aqui sei a quant de observações e variáveis e o tipo.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   67936 obs. of  13 variables:
+ $ X                    : int  82 83 84 85 86 87 88 89 90 91 ...
+ $ Axis1                : int  0 11 0 0 34 101 17 0 12 32 ...
+ $ Axis2                : int  0 4 21 1 14 10 18 34 50 38 ...
+ $ Axis3                : int  0 7 10 24 63 90 49 23 13 36 ...
+ $ Steps                : int  0 1 0 0 1 0 0 0 1 0 ...
+ $ HR                   : num  68 68 68 68 154 161 177 177 177 177 ...
+ $ Inclinometer.Off     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Inclinometer.Standing: int  1 1 0 0 1 1 1 1 1 1 ...
+ $ Inclinometer.Sitting : int  0 0 1 1 0 0 0 0 0 0 ...
+ $ Inclinometer.Lying   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Vector.Magnitude     : num  0 13.6 23.3 24 73 ...
+ $ day                  : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ time                 : chr  "10:10:22" "10:10:23" "10:10:24" "10:10:25" ...</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(listaHeartRate[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "X"                     "Axis1"                 "Axis2"                
+ [4] "Axis3"                 "Steps"                 "HR"                   
+ [7] "Inclinometer.Off"      "Inclinometer.Standing" "Inclinometer.Sitting" 
+[10] "Inclinometer.Lying"    "Vector.Magnitude"      "day"                  
+[13] "time"                 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Nomes das colunas.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Por aqui sei que os dados estão em dias/horas até segundos.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os dados do user_info.csv</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(listaInfoUsers[[<span class="dv">1</span>]])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(listaInfoUsers[[<span class="dv">1</span>]])  <span class="co">#Por aqui sei a quant de observações e variáveis e o tipo.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(listaInfoUsers[[<span class="dv">1</span>]])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Nomes das colunas.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Por aqui sei que os dados estão em dias/horas até segundos.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Análise Exploratória do Actigraph.csv</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Conta quantos valores "NA" existem no seu arquivo</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(listaHeartRate[[<span class="dv">1</span>]]))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatística Descritiva</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(listaHeartRate,summary)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Só col HR</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(listaHeartRate,<span class="cf">function</span>(x) <span class="fu">summary</span>(x<span class="sc">$</span>HR))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Análise Exploratória do user_info.csv</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Conta quantos valores "NA" existem no seu arquivo</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(listaInfoUsers[[<span class="dv">1</span>]]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forçando o R a pegar APENAS a primeira linha de cada user_info </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Isso mata qualquer linha em branco extra que esteja gerando os NAs no rbind)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>listaInfoUsers_limpa <span class="ot">&lt;-</span> <span class="fu">lapply</span>(listaInfoUsers, <span class="cf">function</span>(df) df[<span class="dv">1</span>, , <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Empilhando rows</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>descritiva_info_users<span class="ot">&lt;-</span><span class="fu">do.call</span>(rbind,listaInfoUsers_limpa)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#do.call</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#rbind = row binb = juntar linhas</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(descritiva_info_users)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       X           Gender       Weight           Height           Age       
+ Min.   :0   Length   :22   Min.   : 60.00   Min.   :169.0   Min.   : 0.00  
+ 1st Qu.:0   N.unique : 1   1st Qu.: 67.00   1st Qu.:175.0   1st Qu.:25.00  
+ Median :0   N.blank  : 0   Median : 70.00   Median :180.0   Median :27.00  
+ Mean   :0   Min.nchar: 1   Mean   : 75.05   Mean   :179.9   Mean   :26.05  
+ 3rd Qu.:0   Max.nchar: 1   3rd Qu.: 80.00   3rd Qu.:183.0   3rd Qu.:27.75  
+ Max.   :0                  Max.   :115.00   Max.   :205.0   Max.   :40.00  </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Quem tem Age=0 ?</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>descritiva_info_users[descritiva_info_users<span class="sc">$</span>Age<span class="sc">==</span><span class="dv">0</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   X Gender Weight Height Age
+18 0      M     80    180   0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#User18</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Substituindo o 0 por 27 (mediana)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>descritiva_info_users<span class="sc">$</span>Age[descritiva_info_users<span class="sc">$</span>Age <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">27</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>descritiva_info_users</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   X Gender Weight Height Age
+1  0      M     65    169  29
+2  0      M     95    183  27
+3  0      M     70    174  34
+4  0      M     76    180  27
+5  0      M     80    196  25
+6  0      M     62    178  27
+7  0      M     65    183  25
+8  0      M     74    184  40
+9  0      M     70    175  20
+10 0      M     85    180  27
+11 0      M    115    186  27
+12 0      M     67    170  27
+13 0      M     74    180  25
+14 0      M     64    171  27
+15 0      M     80    180  24
+16 0      M     67    176  27
+17 0      M     60    175  24
+18 0      M     80    180  27
+19 0      M     70    183  22
+20 0      M     70    175  29
+21 0      M     70    175  28
+22 0      M     92    205  32</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(descritiva_info_users)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       X           Gender       Weight           Height           Age       
+ Min.   :0   Length   :22   Min.   : 60.00   Min.   :169.0   Min.   :20.00  
+ 1st Qu.:0   N.unique : 1   1st Qu.: 67.00   1st Qu.:175.0   1st Qu.:25.00  
+ Median :0   N.blank  : 0   Median : 70.00   Median :180.0   Median :27.00  
+ Mean   :0   Min.nchar: 1   Mean   : 75.05   Mean   :179.9   Mean   :27.27  
+ 3rd Qu.:0   Max.nchar: 1   3rd Qu.: 80.00   3rd Qu.:183.0   3rd Qu.:27.75  
+ Max.   :0                  Max.   :115.00   Max.   :205.0   Max.   :40.00  </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Age min = 20 OK</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>No User 18 a coluna idade está 0. Coloquei a mediana das idades (27 anos), pois precisarei calcular o HR_máx, o cálculo é dado pela idade.</p>
+<p>Olhando para as estatísticas descritivas do HR (Heart Rate = Frequência cardíaca) há alguns erros de amplitude.</p>
+<ul>
+<li><p>Mínimos absurdos: O <em>User 3</em>, <em>User 5</em>, <em>User 9</em> e o <em>User 19</em> apresentam mín de 3 bpm. O <em>User 10</em> tem mínimo de 8 bpm. O <em>User 2</em> tem mínimo de 10 bpm.</p>
+<p>OBS: Nosso coração tem de 60 à 100 bpm em repouso, sendo um adulto saudável médio. E de 40 à 60 bpm em atletas ou pessoas com bom condicionamento físico. O coração é mais eficiente, ele bombeia mais sangue por batimento. <strong>Valores de alerta:</strong> Abaixo de 50 bpm em não-atletas (Bradicardia) ou acima de 100 bpm constantemente (Taquicardia) merecem investigação médica.</p></li>
+<li><p>Máximos absurdos:</p>
+<p>Terei que calcular com a idade a frequência máx para cortar os outliers. Para cada indivíduo haverá um HR máx diferente.</p>
+<p>Estão divididos em:</p>
+<ul>
+<li>Repouso</li>
+<li>Zona 1 (Leve)</li>
+<li>Zona 2 (Moderada)</li>
+<li>Zona 3 (Aeróbica)</li>
+<li>Zona 4 (Limiar)</li>
+<li>Zona 5 (Máxima)</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculando O HR máx de cada users.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Zona(repouso/exercícios)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  listaHeartRate_comZonas<span class="ot">&lt;-</span><span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>,<span class="cf">function</span>(i){</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extrai o df só do user i do momento.</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    dfActigraph<span class="ot">&lt;-</span>listaHeartRate[[i]]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extrai o df só do user i do momento.</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    dfInfo<span class="ot">&lt;-</span>listaInfoUsers[[i]]</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># [1] é pq tem só 1 line</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    idadesUsers<span class="ot">&lt;-</span>dfInfo<span class="sc">$</span>Age[<span class="dv">1</span>]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculando o HR máx teórico</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    hrMaxTeorico<span class="ot">&lt;-</span><span class="dv">208</span><span class="sc">-</span>(<span class="fl">0.7</span><span class="sc">*</span>idadesUsers)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Criando as novas colunas no df HR</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    dfActigraph<span class="sc">$</span>HR_Max<span class="ot">&lt;-</span>hrMaxTeorico</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    dfActigraph<span class="sc">$</span>Esforco_por_cento<span class="ot">&lt;-</span>(dfActigraph<span class="sc">$</span>HR<span class="sc">/</span>hrMaxTeorico)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Classifica as zonas usando a função cut()</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    dfActigraph<span class="sc">$</span>Zona_Treino <span class="ot">&lt;-</span> <span class="fu">cut</span>(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>      dfActigraph<span class="sc">$</span>Esforco_por_cento,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="cn">Inf</span>),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Repouso"</span>, <span class="st">"Zona 1 (Leve)"</span>, <span class="st">"Zona 2 (Moderada)"</span>,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Zona 3 (Aeróbica)"</span>, <span class="st">"Zona 4 (Limiar)"</span>, <span class="st">"Zona 5 (Máxima)"</span>),</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">right =</span> <span class="cn">TRUE</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Colocando tudo no seu lugar de volta</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(dfActigraph)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Dando nomes as listas</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(listaHeartRate_comZonas)<span class="ot">&lt;-</span><span class="fu">paste0</span>(<span class="st">"User_"</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vizualizando</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#View(listaHeartRate_comZonas)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#View(listaHeartRate_comZonas[[7]])</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Foi criado mais três colunas:<br>
+- HR_max (a frequência cardíaca máxima) - Esforco_por_cento (a porcentagem do HR, vizualiza melhor o quanto de esforço o indivíduo faz) - Zona_Treino<br>
+- Repouso - Zona 1 (Leve) - Zona 2 (Moderada) - Zona 3 (Aeróbica) - Zona 4 (Limiar) - Zona 5 (Máxima)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>listaHeartRate_Filtrada<span class="ot">&lt;-</span><span class="fu">lapply</span>(listaHeartRate_comZonas,<span class="cf">function</span>(df){</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filtra o HR memor que 35 e maior que o HR_Max calculado</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  df<span class="sc">$</span>HR[df<span class="sc">$</span>HR <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">|</span> df<span class="sc">$</span>HR <span class="sc">&gt;</span> df<span class="sc">$</span>HR_Max] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumo descritivo da coluna HR para cada um dos 22 usuários de uma vez só:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>resumo_geral <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(listaHeartRate_Filtrada, <span class="cf">function</span>(df) {</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(df<span class="sc">$</span>HR)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (..., deparse.level = 1) : number of columns of result is
+not a multiple of vector length (arg 4)</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(resumo_geral) <span class="ot">&lt;-</span> <span class="fu">names</span>(listaHeartRate_Filtrada)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe uma tabela limpa com Min, Max, Média de todos</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumo_geral)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Min. 1st Qu. Median     Mean 3rd Qu. Max.  NAs
+User_1    53      70     86 84.72082      97  177    6
+User_2    35      67     75 74.68391      82  188  353
+User_3    50      62     78 77.53348      85  179    6
+User_4    44      63     72 71.91808      81  189   44
+User_5    49      66     73 74.88780      82  131   20
+User_6    46      72     87 86.26360      97  157   29
+User_7    47      62     76 76.15843      87  159    1
+User_8    48      62     71 71.99731      79  173   14
+User_9    47      59     64 73.15118      77  194  118
+User_10   50      66     72 73.48126      80  181   28
+User_11   48      61     70 70.36916      78  129   12
+User_12   49      61     73 73.87105      81  166   49
+User_13   35      61     75 75.39706      87  145    7
+User_14   47      62     70 72.17057      78  137    1
+User_15   35      70     88 89.32254     101  191 1450
+User_16   44      55     71 69.78175      80  187   32
+User_17   35      68     87 85.88420      99  190  192
+User_18   47      63     70 70.49519      75  202   21
+User_19   44      57     72 73.56386      87  152    1
+User_20   44      57     70 69.90627      80  186   76
+User_21   51      65     74 76.10153      83  166   15
+User_22   42      57     67 65.29757      72  131   42</code></pre>
+</div>
+</div>
+<p>A análise exploratória revelou artefatos de medição severos nos dados de frequência cardíaca bruta (com registros implausíveis variando de 3 a 8 bpm). Após a aplicação de um filtro fisiológico (limiar inferior de 35 bpm e superior baseado no <span class="math inline">\(HR_{máx}\)</span> teórico de cada indivíduo), observou-se uma perda de dados proeminente em usuários específicos, com destaque para o User_15 (1.450 dados omissos). Essa perda é atribuída a limitações práticas no acoplamento da cinta peitoral necessária para o registro de HR no dispositivo ActiGraph wGT3X-BT, causadas por deslocamento mecânico durante o sono ou perda temporária de condutividade elétrica na pele.</p>
+</section>
+<section id="corrigindo" class="level4">
+<h4 class="anchored" data-anchor-id="corrigindo">Corrigindo…</h4>
+<p>Como a quantidade de NAs perto do total de dados (67.936) é muito pequena (1.450 não chega a 2% do total do User 15), nós podemos imputar esses dados (preencher os vazios) usando uma técnica de séries temporais chamada LOCF (Last Observation Carried Forward), que basicamente repete o último valor válido até o sensor voltar a funcionar.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Corrigindo os NAs</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>listaHeartRate_LOCF <span class="ot">&lt;-</span> <span class="fu">lapply</span>(listaHeartRate_Filtrada, <span class="cf">function</span>(df){</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  hr <span class="ot">&lt;-</span> df<span class="sc">$</span>HR</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Preenche cada NA com o último valor válido</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(hr)){</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.na</span>(hr[i])){</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>      hr[i] <span class="ot">&lt;-</span> hr[i<span class="dv">-1</span>]</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  df<span class="sc">$</span>HR <span class="ot">&lt;-</span> hr</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  df</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conferindo</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(listaHeartRate_LOCF, <span class="cf">function</span>(df){</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">is.na</span>(df<span class="sc">$</span>HR))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> User_1  User_2  User_3  User_4  User_5  User_6  User_7  User_8  User_9 User_10 
+      0       0       0       0       2       0       0       0       0       0 
+User_11 User_12 User_13 User_14 User_15 User_16 User_17 User_18 User_19 User_20 
+      6       0       0       0      13      17      19       4       0       0 
+User_21 User_22 
+      0       0 </code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="série-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="série-temporal">Série Temporal</h2>
+<p>Pacote utilizado:</p>
+<ul>
+<li>Forecast: O pacote forecast (que significa “previsão”, em inglês) é um dos pacotes mais famosos e robustos do R para análise e modelagem de séries temporais. Ele foi desenvolvido por Rob J. Hyndman, uma das maiores autoridades mundiais no assunto.</li>
+</ul>
+<p>Em resumo, ele serve para duas grandes missões: entender o passado (analisar o comportamento da série) e prever o futuro (fazer projeções).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando pacotes</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("forecast")</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extrai o dataframe da lista</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_hr <span class="ot">&lt;-</span> listaHeartRate_Filtrada[[<span class="dv">1</span>]]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prepara a linha do tempo contínua</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>data_base <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-01-01"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>string_data_hora <span class="ot">&lt;-</span> <span class="fu">paste</span>(data_base <span class="sc">+</span> (df_hr<span class="sc">$</span>day <span class="sc">-</span> <span class="dv">1</span>), df_hr<span class="sc">$</span>time)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>tempo_completo <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(string_data_hora, <span class="at">format =</span> <span class="st">"%Y-%m-%d %H:%M:%S"</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define os marcadores de início e fim</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>inicio <span class="ot">&lt;-</span> <span class="fu">min</span>(tempo_completo)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>fim    <span class="ot">&lt;-</span> <span class="fu">max</span>(tempo_completo)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>marcas_eixo <span class="ot">&lt;-</span> <span class="fu">c</span>(inicio, <span class="fu">seq</span>(inicio, fim, <span class="at">by =</span> <span class="st">"1 hour"</span>), fim)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Desenha o gráfico (plot.new é chamado AQUI!)</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> tempo_completo,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> df_hr<span class="sc">$</span>HR,</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"#2B5C8F"</span>, </span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">lwd =</span> <span class="fl">0.8</span>,  </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">las =</span> <span class="dv">1</span>,  </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">bty =</span> <span class="st">"l"</span>,  </span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="co"># Esconde o eixo X automático</span></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Horário (HH:MM)"</span>,</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Série temporal da frequência cardíaca"</span>)</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Adiciona o eixo X customizado (com início e fim)</span></span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="fu">axis.POSIXct</span>(<span class="at">side =</span> <span class="dv">1</span>, </span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>             <span class="at">at =</span> marcas_eixo, </span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"%H:%M"</span>, </span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Adiciona a grade logo em seguida (enquanto o gráfico está ativo)</span></span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">nx =</span> <span class="cn">NULL</span>, <span class="at">ny =</span> <span class="cn">NULL</span>, <span class="at">col =</span> <span class="st">"gray85"</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="estatística-descritiva-da-série-temporal" class="level3">
+<h3 class="anchored" data-anchor-id="estatística-descritiva-da-série-temporal">Estatística Descritiva da Série Temporal</h3>
+<p>O mínimo bpm registrado é de 53, que é compatível com um estado de repouso. A máxima bpm foi de 177, que é compatível com práticas de exercício físico intenso. A mediana foi de 86 bpm, como ela é um valor que divide os dados no meio, podemos concluir que ela está monstando a tendência central do ciclo de batimentos cardíacos. Com a média de 84,72 bpm, um valor quase igual a mediana,observa-se que a distribuição da frequência cardíaca é aproximadamente simétrica, reforça mais ainda que a tendência do ciclo se cencontrar em torno de <span class="math inline">\((86+84.72)/2=85,36\)</span>.</p>
+<p>Um jeito melhor de tiramos uma faixa central como sendo uma “<em>zona habitual de vigília</em>”, o nosso modo acordado, é olhando para o IQR (Inter Quartile Range ou Intervalo Interquartil) pois representa os 50% centrais dos dados. Que vai de <span class="math inline">\(Q_1\)</span> = 70 bpm a <span class="math inline">\(Q_3\)</span> = 97 bpm. Logo, a zona habitual de vigília oscila em 27 valores de batimentos. Com isso podemos tirar conclusões que abaixo do <span class="math inline">\(Q_1\)</span> de 70bpm pode indicar um estado de repouso e atividades de baixa intensidade. E acima do <span class="math inline">\(Q_3\)</span> de 97bpm pode indicar atividades de maior demanda como: uma caminhada até a parada do ônibus, uma ansiedade, uma subida as escadas, uma xícara de café,etc.</p>
+<p>É considerado um outlier (ou dado discrepante) de acordo com a regra clássica do Boxplot de Tukey, fences rules (regra das cercas), se: <span class="math display">\[\text{Limite Superior} = Q_3 + (1{,}5 \times \text{IQR})\]</span> Logo, valores acima de 137,5 bpm são considerados outliers. Abaixo há um saída com os outliers, pode parecer muitos valores, mas não são. Pois os dados estão em segundos e o coração vai acelerando devagar, não pula de um valor para outro.</p>
+<section id="abaixo-os-códigos-com-os-respectivos-resultados" class="level5">
+<h5 class="anchored" data-anchor-id="abaixo-os-códigos-com-os-respectivos-resultados">Abaixo os códigos com os respectivos resultados:</h5>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatística Descritiva da Série Temporal</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Recria a série temporal a partir do seu dataframe original</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>serieHR <span class="ot">&lt;-</span> <span class="fu">ts</span>(listaHeartRate_Filtrada[[<span class="dv">1</span>]]<span class="sc">$</span>HR, <span class="at">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(serieHR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
+  53.00   70.00   86.00   84.72   97.00  177.00       6 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desvio Padrão</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(serieHR,<span class="at">na.rm=</span><span class="cn">TRUE</span>)  <span class="co">#Ignora os NAs e faz os cálculos!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16.87583</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervalo Interquartil</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>iqr<span class="ot">&lt;-</span><span class="fu">IQR</span>(serieHR,<span class="at">na.rm=</span><span class="cn">TRUE</span>);iqr <span class="co">#Ignora os NAs e faz o cálculo!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27</code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>q3<span class="ot">&lt;-</span><span class="fu">quantile</span>(serieHR,<span class="at">probs =</span> <span class="fl">0.75</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>);q3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>75% 
+ 97 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outlier "fences rules"</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>limite_superior<span class="ot">&lt;-</span>q3<span class="fl">+1.5</span><span class="sc">*</span>iqr;limite_superior</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  75% 
+137.5 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Todos os valores considerados outliers</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot.stats</span>(serieHR)<span class="sc">$</span>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 154 161 177 177 177 177 177 141 141 141 141 141 141 141 141 141 141 138
+ [19] 139 139 139 139 139 139 138 139 141 142 143 146 145 145 144 143 143 142
+ [37] 141 140 139 139 138 138 138 138 138 138 139 140 142 143 144 144 145 146
+ [55] 146 147 147 145 144 142 141 140 140 140 139 140 141 142 142 143 143 143
+ [73] 140 139 138 138 142 139 140 141 141 138 139 140 140 142 142 143 144 144
+ [91] 145 145 144 144 143 142 141 140 139 138 138 139 139 139 140 140 141 141
+[109] 141 141 141 141 140 140 140 140 139 139 139 139 138 138</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando as margens e limites do eixo X</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(serieHR, </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribuição da Frequência Cardíaca (serieHR)"</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência Absoluta (Contagem)"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"#4E79A7"</span>,           <span class="co"># Azul moderno</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">"white"</span>,          <span class="co"># Bordas brancas limpas</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">las =</span> <span class="dv">1</span>)                  <span class="co"># Rótulos do eixo Y na horizontal</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>O histograma mostra concentração de observações entre aproximadamente 70 e 100 bpm, com cauda estendida para valores elevados de frequência cardíaca, refletindo episódios esporádicos de maior intensidade física.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BoxPlot</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(serieHR,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot da Frequência Cardíaca"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"#81A1C1"</span>,           <span class="co"># Azul pastel moderno</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="st">"#2E3440"</span>,        <span class="co"># Bordas escuras bem definidas</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">outcol =</span> <span class="st">"#BF616A"</span>,        <span class="co"># Outliers em vermelho/destaque</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">outpch =</span> <span class="dv">19</span>,               <span class="co"># Pontos preenchidos nos outliers</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">outcex =</span> <span class="fl">0.8</span>,              <span class="co"># Tamanho dos outliers</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">las =</span> <span class="dv">1</span>,                   <span class="co"># Números na horizontal no eixo Y</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">pars =</span> <span class="fu">list</span>(<span class="at">boxwex =</span> <span class="fl">0.4</span>)) <span class="co"># Torna a caixa mais fina e elegante</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>O boxplot confirma a presença de diversos valores acima do limite superior de Tukey. Entretanto, esses valores são compatíveis com a dinâmica fisiológica da frequência cardíaca ao longo do dia e, portanto, não foram considerados erros experimentais.</p>
+</section>
+</section>
+<section id="síntese-da-análise-descritiva" class="level3">
+<h3 class="anchored" data-anchor-id="síntese-da-análise-descritiva">Síntese da Análise Descritiva</h3>
+<p>A análise descritiva permitiu compreender o comportamento geral da frequência cardíaca ao longo do período observado. Entretanto, por se tratar de uma variável registrada sequencialmente no tempo, medidas descritivas isoladas não são suficientes para caracterizar completamente sua dinâmica. Assim, na próxima etapa será investigada a estrutura temporal da série, avaliando-se a presença de tendência, sazonalidade e dependência temporal, etapas fundamentais para a construção de modelos de previsão.</p>
+</section>
+<section id="a-série-possui-tendência" class="level3">
+<h3 class="anchored" data-anchor-id="a-série-possui-tendência">A Série possui Tendência?</h3>
+<p><em>Existe uma tendência crescente ou decrescente ao longo do tempo?</em></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando os objetos</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>tempo <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(serieHR)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(serieHR <span class="sc">~</span> tempo)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de margem para o eixo Y não cortar</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotando</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(serieHR,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Tendência Linear da Frequência Cardíaca"</span>,</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Tempo (segundos)"</span>,</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"#2B5C8F"</span>,  <span class="co">#Azul suave para os dados.</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">lwd =</span> <span class="fl">0.8</span>,</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">las =</span> <span class="dv">1</span>,  <span class="co">#Números na horizontal.</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">bty =</span> <span class="st">"l"</span>)  <span class="co">#Layout sem caixa fechada.</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona a grade no fundo</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">nx =</span> <span class="cn">NULL</span>, <span class="at">ny =</span> <span class="cn">NULL</span>, <span class="at">col =</span> <span class="st">"gray85"</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona a linha de tendência linear</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo,</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"#E15759"</span>,  <span class="co">#Vermelho moderno/coral</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="fl">2.5</span>,</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>)  <span class="co">#Linha contínua (ou use lty = 2 para tracejado)</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Legenda discreta no topo</span></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Série HR"</span>, <span class="st">"Tendência Linear"</span>),</span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#2B5C8F"</span>, <span class="st">"#E15759"</span>), </span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">2.5</span>), </span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">"n"</span>)            <span class="co"># Sem borda na legenda</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Mesmo observando uma oscilação grande na frequência cardiaca, a linha de tendência se encontra na horizontal mostrando uma leve inclinação, uma tendência suave na frequência cardíaca. No gráfico de 1 usuário ela sai sem tendência, com todos os 22 usuários ela já sai com uma leve tendência decrescente. Como o registro começa de 10 h 10 min e 22 seg, pode ser que essa tendência decrescente se dá ao fato de estar se aproximando da noite e do sono. Para analisar melhor vamos procurar por sazonalidades.</p>
+</section>
+<section id="existe-sazonalidade" class="level3">
+<h3 class="anchored" data-anchor-id="existe-sazonalidade">Existe Sazonalidade?</h3>
+<p><em>A frequência cardíaca apresenta um padrão que se repete ao longo do tempo?</em></p>
+<p><em>Há uma tendência decrescente se aproximando da hora de dormir? E há uma tendência crescente ao acordar? Em que momento inverte?</em></p>
+<p>A sazonalidade ocorre quando um padrão se repete em intervalos regulares de tempo.O ritmo circadiano é o “relógio interno” do organismo que regula as funções biológicas em ciclos de aproximadamente 24 horas. Ele faz com que a frequência cardíaca não oscile de forma totalmente aleatória: espera-se um padrão sazonal claro, com batimentos mais elevados nos horários de atividade diurna (vigília) e um declínio acentuado durante a noite (sono).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Clique aqui para ver o código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Converte o tempo para horas decorridas</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>tempo_horas <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(serieHR)) <span class="sc">/</span> <span class="dv">3600</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Calcula a Média Móvel de 5 minutos (300 segundos) para suavizar a sazonalidade</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>media_movel_5min <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(serieHR, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">300</span>, <span class="dv">300</span>), <span class="at">sides =</span> <span class="dv">2</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Ajusta o modelo de tendência em HORAS (para desenhar a abline corretamente)</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>modelo_horas <span class="ot">&lt;-</span> <span class="fu">lm</span>(serieHR <span class="sc">~</span> tempo_horas)</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Gráfico de Sazonalidade / Ritmo Circadiano</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tempo_horas, serieHR,</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"gray75"</span>, <span class="co"># Série bruta em cinza claro ao fundo para não poluir</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Tempo Decorrido (Horas a partir das 10:10)"</span>,</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência Cardíaca (bpm)"</span>,</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Sazonalidade Intra-diária e Ritmo Circadiano"</span>,</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">bty =</span> <span class="st">"l"</span>,</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona a Média Móvel em destaque (Azul) para ver a curva do sono/vigília</span></span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tempo_horas, media_movel_5min, <span class="at">col =</span> <span class="st">"#2B5C8F"</span>, <span class="at">lwd =</span> <span class="fl">2.5</span>)</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona a linha de tendência linear ajustada para horas (Vermelho)</span></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo_horas, <span class="at">col =</span> <span class="st">"#E15759"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Eixo X customizado de 2 em 2 horas</span></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(tempo_horas), <span class="at">by =</span> <span class="dv">2</span>))</span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Grade discreta</span></span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">nx =</span> <span class="cn">NULL</span>, <span class="at">ny =</span> <span class="cn">NULL</span>, <span class="at">col =</span> <span class="st">"gray85"</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Legenda explicativa</span></span>
+<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Série Bruta (Segundos)"</span>, <span class="st">"Média Móvel (5 min)"</span>, <span class="st">"Tendência Linear"</span>),</span>
+<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"gray75"</span>, <span class="st">"#2B5C8F"</span>, <span class="st">"#E15759"</span>),</span>
+<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">2.5</span>, <span class="dv">2</span>),</span>
+<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">"n"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ritimo-circadiano-series-temporais-2026may_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A média móvel é uma das ferramentas mais clássicas e essenciais na análise de séries temporais. Para simplificar, a principal função dela é reduzir o “ruído” (as flutuações diárias ou aleatórias) para que você consiga enxergar a real tendência dos dados. Durante o dia teremos picos de estresse, xícaras de café, subir escadas, etc. Tudo isso pode causar ruídos.</p>
+<p>A linha azul representa a média móvel de 5 minutos. Ela filtra esses picos rápidos e mostra o comportamento macro do coração. Ela ignora as pequenas variações e foca no que realmente importa: o estado geral da pessoa.</p>
+<p><strong>Vigília Tarde (Horas 3 a 7):</strong> Período de atividade contínua com média mantida próxima de 100 bpm.</p>
+<p><strong>Vales de Repouso/Sono (Horas 12 a 16):</strong> Queda acentuada para a casa dos 60 bpm, com baixíssima oscilação, caracterizando o estado de repouso noturno e sono profundo.</p>
+<p><strong>Fase de Despertar (Horas 17 a 18):</strong> Reativação fisiológica expressiva, com a frequência subindo rapidamente rumo aos picos mais altos do registro.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
