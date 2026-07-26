@@ -6,6 +6,8 @@ format:
     code-fold: true
     code-summary: "Clique aqui para ver o código"
 editor: visual
+execute:
+  cache: true
 ---
 
 ## Introdução
@@ -403,7 +405,7 @@ Mesmo observando uma oscilação grande na frequência cardiaca, a linha de tend
 
 *Há uma tendência decrescente se aproximando da hora de dormir? E há uma tendência crescente ao acordar? Em que momento inverte?*
 
-A sazonalidade ocorre quando um padrão se repete em intervalos regulares de tempo.O ritmo circadiano é o "relógio interno" do organismo que regula as funções biológicas em ciclos de aproximadamente 24 horas. Ele faz com que a frequência cardíaca não oscile de forma totalmente aleatória: espera-se um padrão sazonal claro, com batimentos mais elevados nos horários de atividade diurna (vigília) e um declínio acentuado durante a noite (sono).
+A sazonalidade ocorre quando um padrão se repete em intervalos regulares de tempo. O ritmo circadiano é o "relógio interno" do organismo que regula as funções biológicas em ciclos de aproximadamente 24 horas. Ele faz com que a frequência cardíaca não oscile de forma totalmente aleatória: espera-se um padrão sazonal claro, com batimentos mais elevados nos horários de atividade diurna (vigília) e um declínio acentuado durante a noite (sono).
 
 ```{r}
 # 1. Converte o tempo para horas decorridas
@@ -459,7 +461,130 @@ A linha azul representa a média móvel de 5 minutos. Ela filtra esses picos rá
 **Fase de Despertar (Horas 17 a 18):** Reativação fisiológica expressiva, com a frequência subindo rapidamente rumo aos picos mais altos do registro.
 
 
-## Modelagem e Previsão
+### Autocorrelação da Série
+
+**acf (O coeficiente de correlação):** É um número que varia entre -1 e 1:\
+
+- Correlação positiva perfeita (o lag 0 sempre terá ACF = 1, pois um dado é identicamente igual a si mesmo).\
+- 0: Nenhuma correlação (o passado não ajuda a prever o presente).\
+- 1: Correlação negativa perfeita (se o passado subiu, o presente cai).
+
+**lag (Os passos no tempo):** Indica a distância temporal. O 0 é o momento atual, 1 é 1 passo atrás, 2 são 2 passos atrás, e assim por diante (até 48 passos neste caso, já que o vetor vai de 1 a 49).
+
+```{r}
+# Trata a série e calcula a ACF sem plotar automaticamente
+serieHR2 <- ts(na.omit(listaHeartRate_Filtrada[[1]]$HR))
+acf_hr <- acf(serieHR2, plot = FALSE);acf_hr
+
+
+# Só para deixar o gráfico bonito!
+
+# Configurações estéticas globais (margens e fonte limpa)
+par(mar = c(5, 4.5, 4, 2) + 0.1, family = "sans")
+
+# Desenha o gráfico principal (barras/linhas de autocorrelação)
+plot(acf_hr$lag[-1], acf_hr$acf[-1], type = "h", 
+     lwd = 2.5, col = "#2B5C8F", 
+     ylim = c(min(acf_hr$acf, -0.2), 1),
+     xlab = "Lags (Defasagem)", 
+     ylab = "Autocorrelação",
+     main = "Função de Autocorrelação (ACF) - Frequência Cardíaca",
+     col.main = "#1A1A1A", font.main = 2, cex.main = 1.1,
+     bty = "n", xaxt = "n", yaxt = "n")
+
+# Add o Grid
+grid(nx = NULL, ny = NULL, col = "#E5E5E5", lty = "solid", lwd = 0.8)
+
+# Recria as barras por cima do grid (para o grid não "cortar" as barras)
+lines(acf_hr$lag[-1], acf_hr$acf[-1], type = "h", lwd = 2.5, col = "#2B5C8F")
+
+# Adiciona os limites de significância estatística (Intervalo de Confiança ~95%)
+ci <- qnorm((1 + 0.95) / 2) / sqrt(length(serieHR2))
+abline(h = c(-ci, ci), lty = 2, col = "#D9534F", lwd = 1.2)
+abline(h = 0, col = "#333333", lwd = 1)
+
+# Personaliza os eixos numéricos com cores mais suaves
+axis(1, col = "#CCCCCC", col.axis = "#555555", lwd = 1)
+axis(2, col = "#CCCCCC", col.axis = "#555555", lwd = 1, las = 1)
+```
+
+
+O que ele mostra é que:
+
+No lag 0, a autocorrelação é 1, como sempre acontece. Nos primeiros atrasos (lags 1, 2, 3, ...), a autocorrelação continua muito alta (próxima de 1). À medida que o lag aumenta, ela diminui muito lentamente, permanecendo acima de aproximadamente 0,8 mesmo no lag 48.
+
+Mesmo após 4 passos (lag 4), a autocorrelação ainda está em 0.974. Isso significa que os batimentos cardíacos mudam de forma gradual. Se o coração estava batendo a 100 bpm há 4 segundos/minutos atrás, há uma chance gigantesca de ele continuar muito perto de 100 bpm agora. Os dados têm "memória".
+
+Quando o valor da ACF decai de forma muito, muito lenta (como 0.996 -\> 0.990 -\> 0.982), isso é um forte indício estatístico de que a série temporal possui uma tendência clara ou não é estacionária. O coração passa longos períodos em patamares diferentes (como o período de sono vs. período acordado que vimos no gráfico anterior).
+
+A análise da função de autocorrelação mostrou que observações consecutivas apresentam elevada dependência temporal, característica esperada em séries fisiológicas de frequência cardíaca. Além disso, a presença de persistência ao longo dos atrasos indica que modelos capazes de atualizar continuamente suas estimativas podem representar adequadamente o comportamento da série. Nesse contexto, optou-se por utilizar métodos de suavização exponencial para modelar e realizar previsões da frequência cardíaca.
+
+### Modelos de Suavização Exponencial
+
+***O que é suavização exponencial?***
+
+O nome é confuso porque parece que você está suavizando os dados observados. Mas na verdade, você está suavizando a previsão.
+A Suavização Exponencial pega a oscilação bruta dos dados (cheios de ruído) e extrai o que importa: o nível subjacente (a posição média atual) e, nos modelos mais complexos, a tendência (para onde isso está indo) e a sazonalidade (o padrão cíclico).
+
+Como a frequência cardíaca oscila bastante, é difícel saber em quantos bpms ela está no momento. "Suavizar" nesse caso seria como achar um ponteiro. Em vez de confiar no valor exato de cada milésimo de segundo, se faz uma média dos últimos segundos para ter uma ideia mais estável e confiável da tendência. Na suavização os dados mais novos contam mais que os dados mais antigos.
+
+Para entender melhor, os dados na média móvel simples tem o mesmo peso \frac{1/n}. Já na suavização os pesos decaem exponencialmente à medida que nos afastamos no tempo.
+
+**1. SES (Simple Exponential Smoothing) - Suavização Exponencial Simples**
+
+    - Para que serve: Dados sem tendência e sem sazonalidade (apenas nível).
+
+    - Como funciona: A previsão para o próximo período é uma média ponderada entre o último valor observado e a última previsão.
+
+    - Fórmula conceitual: Previsão(t+1) = α × (Valor real em t) + (1-α) × Previsão(t)
+
+    - O α (alfa) é o fator de suavização (entre 0 e 1). Quanto maior o α, mais o modelo "reage" a mudanças bruscas; quanto menor, mais "suave" e estável é a linha.
+    
+**2. Holt (ou Holt Linear) - Suavização Exponencial com Tendência**
+
+    - Para que serve: Dados que apresentam tendência (crescimento ou queda constante), mas sem sazonalidade.
+
+    - Como funciona: É o SES, mas com uma equação extra para capturar a inclinação da tendência. Ele usa dois fatores de suavização:
+
+        - α (alfa) para suavizar o nível (valor atual).
+
+        - β (beta) para suavizar a inclinação (tendência de crescimento/queda).
+
+    - Ele prevê uma linha reta inclinada para o futuro.
+    
+**3. Holt-Winters (ou Suavização Exponencial Tripla)**
+
+    - Para que serve: Dados que apresentam tendência + sazonalidade (padrões que se repetem em ciclos, como vendas de Natal, calor no verão, etc.).
+
+    - Como funciona: É o Holt, mas com uma terceira equação para capturar a sazonalidade. Ele usa três fatores de suavização:
+
+        - α (alfa) para o nível
+
+        - β (beta) para a tendência
+
+        - γ (gama) para a sazonalidade
+
+    - Ele ainda se divide em duas versões:
+
+        - Aditivo: Quando a sazonalidade tem amplitude constante (ex: vende-se sempre 1.000 unidades a mais no verão, independente do ano).
+
+        - Multiplicativo: Quando a sazonalidade cresce com o tempo (ex: vende-se 20% a mais no verão; se as vendas sobem, o pico sazonal também sobe).
+        
+        
+***Por que utilizar esse método de estudo?***
+
+A escolha desses métodos justifica-se pela capacidade de isolar ruídos biológicos e identificar componentes estocásticos de nível, tendência e sazonalidade diária (24 horas). A performance dos três modelos foi avaliada por meio das métricas de erro (RMSE, MAE e MAPE) para determinar qual estrutura matemática captura melhor o comportamento fisiológico da amostra.
+
+***Por que a suavização exponencial se aplica perfeitamente a dados contínuos?***
+
+- **Ela trabalha com valores reais (contínuos):** Suas equações (nível, tendência e sazonalidade) são baseadas em médias ponderadas e somas. Elas aceitam qualquer número decimal, ao contrário de modelos para dados discretos (como regressão logística, que exige 0 ou 1, ou modelos de contagem, como Poisson).
+
+- **Ela não exige estacionariedade rigorosa:** Diferente de modelos ARIMA (que exigem que a média e a variância sejam constantes ao longo do tempo), a Suavização Exponencial abraça a mudança. Ela foi feita justamente para rastrear a evolução contínua dos dados, ajustando-se suavemente a novas médias e novas inclinações a cada novo ponto registrado.
+
+- **Atualização contínua e recursiva (online learning):** Em dados contínuos (como temperatura, preço de ações, ou sinais de sensores), você recebe medições o tempo todo. A Suavização Exponencial é recursiva: ela não precisa guardar todo o histórico para refazer o cálculo. Ela apenas pega o novo valor, aplica o α, e atualiza o estado atual do modelo. Isso a torna extremamente leve e rápida para streaming de dados.
+
+- **Peso exponencial decai de forma contínua:** Ao contrário da média móvel simples (que corta bruscamente os dados antigos), a Suavização Exponencial atribui pesos que diminuem numa curva suave e contínua (curva exponencial). Isso evita "saltos" bruscos nas previsões quando um dado muito antigo sai da janela de cálculo.
+
 
 ```{r}
 library(forecast)
@@ -476,9 +601,8 @@ n_teste  <- n_total - n_treino
 treino <- window(serieHR_ts, end = c(1, n_treino))
 teste  <- window(serieHR_ts, start = c(1, n_treino + 1))
 
-# ----------------------------------------------------------------------
+
 # 3. Ajuste dos Modelos de Suavização Exponencial
-# ----------------------------------------------------------------------
 
 # Modelo 1: Suavização Exponencial Simples (SES)
 modelo_ses <- ses(treino, h = n_teste)
@@ -490,9 +614,9 @@ modelo_holt <- holt(treino, h = n_teste)
 fit_hw <- HoltWinters(treino, seasonal = "additive")
 modelo_hw <- forecast(fit_hw, h = n_teste)
 
-# ----------------------------------------------------------------------
+
 # 4. Avaliação e Comparação de Desempenho (Métricas)
-# ----------------------------------------------------------------------
+
 acc_ses  <- accuracy(modelo_ses, teste)
 acc_holt <- accuracy(modelo_holt, teste)
 acc_hw   <- accuracy(modelo_hw, teste)
@@ -508,9 +632,8 @@ tabela_metricas <- data.frame(
 # Exibe a tabela no console
 print(tabela_metricas)
 
-# ----------------------------------------------------------------------
+
 # 5. Gráfico de Previsão em R Base
-# ----------------------------------------------------------------------
 
 # Definindo limites do eixo Y
 ylim_range <- range(c(as.numeric(treino), as.numeric(teste), 
@@ -549,3 +672,21 @@ legend("topleft",
        cex = 0.8)
 ```
 
+MAE: Mean Absolute Error (Erro Médio Absoluto)
+É o erro médio simples na mesma unidade da variável. Ele pega o erro de cada previsão (Diferença = Valor Real − Previsão), ignora o sinal de positivo ou negativo (pega o valor absoluto) e faz uma média simples de tudo.
+No SES o valor foi de 21.40, ou seja, minha previsão erra em média 21.40 batimentos por minuto.
+
+RMSE: Root Mean Squared Error (Raiz do Erro Quadrático Médio)
+É o erro médio que penaliza pesadamente os grandes deslizes. Ele eleva todos os erros ao quadrado antes de tirar a média e, no final, tira a raiz quadrada do resultado (para voltar à unidade original). Por isso, o RMSE "castiga" o modelo se ele cometer um erro muito discrepante (outlier). O que é bom para saber se o modelo é instável. Pois se o RMSE estiver muito mais alto que o MAE, é sinal que teve erros gigantes.
+No SES o RMSE é de 29.7320 enquanto no MAE é de 21.4057, não há uma distância considerável entre eles.
+
+MAPE: Mean Absolute Percentage Error (Erro Percentual Absoluto Médio)
+Ele calcula o quanto o erro representa percentualmente em relação ao valor real e faz uma média de todas as porcentagens. É a melhor métrica para comparar modelos em dados de escalas totalmente diferentes.
+E no SES é o valor mais baixo de 21.9475.
+
+Logo, o modelo de suavização exponencial simples é o melhor.
+
+
+### Previsão
+
+*Com base no comportamento observado até agora, como será a frequência cardíaca nos próximos instantes?*
