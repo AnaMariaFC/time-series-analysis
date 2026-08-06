@@ -1,4 +1,5 @@
 # TRADUÇÃO DO SITE DO DATASET
+https://physionet.org/content/mmash/1.0.0/
 
 ## Multilevel Monitoring of Activity and Sleep in Healthy People
 (Monitoramento multinível da atividade e do sono em pessoas saudáveis.)
@@ -96,5 +97,63 @@ Estresse diário: O Inventário de Estresse Diário (DSI) é uma medida de autoa
 
 PANAS: Escala de Afetos Positivos e Negativos. Atribui uma pontuação entre 5 e 50 para emoções positivas e negativas [6]. Quanto maior o valor do PANAS, maior a emoção percebida. As colunas com os números 10, 14, 22 e 9+1 referem-se ao horário do dia em que o questionário foi preenchido. 9+1 indica as 9h da manhã do segundo dia de coleta de dados.
 
+#### Activity.csv - lista das categorias de atividades ao longo do dia. As categorias são (as atividades listadas abaixo correspondem ao ID numérico de cada atividade no arquivo CSV):
+
+1. Dormir.
+
+2. Deitar.
+
+3. Sentar, por exemplo, estudar, comer e dirigir.
+
+4. Movimento leve, por exemplo, caminhada lenta/moderada, tarefas domésticas e trabalho.
+
+5. Movimento moderado, por exemplo, caminhada rápida e andar de bicicleta.
+
+6. Movimento intenso, por exemplo, academia, corrida.
+
+7. Comer.
+
+8. Uso de telas pequenas, por exemplo, smartphone e computador.
+
+9. Uso de telas grandes, por exemplo, TV e cinema.
+
+10. Consumo de bebidas com cafeína, por exemplo, café ou refrigerante.
+
+11. Fumar.
+
+12. Consumo de álcool. As colunas 'Início' e 'Fim' referem-se à hora do dia (horas:minutos) em que o evento ocorreu, enquanto a coluna 'Dia' refere-se ao dia em que ocorreu (1 e 2 referem-se ao primeiro e segundo dia de registro de dados, respectivamente).
+
+#### Actigraph.csv - dados do acelerômetro e inclinômetro registrados ao longo do dia:
+
+- Eixo 1: Dados brutos de aceleração do eixo X expressos em Newton-metro.
+
+- Eixo 2: Dados brutos de aceleração do eixo Y expressos em Newton-metro.
+
+- Eixo 3: Dados brutos de aceleração do eixo Z expressos em Newton-metro.
+
+- Passos: número de passos por segundo.
+
+- FC: batimentos por minuto (bpm).
+
+- Inclinômetro Desligado: valores iguais a 1 referem-se à desativação do inclinômetro. Os valores são registrados por segundo.
+
+- Inclinômetro em Pé: valores iguais a 1 referem-se à posição em pé do usuário, enquanto 0 refere-se a outras posições do usuário. Os valores são registrados por segundo.
+
+- Inclinômetro Sentado: valores iguais a 1 referem-se à posição sentada do usuário, enquanto 0 refere-se a outras posições. Os valores são reportados por segundo.
+
+- Inclinômetro Deitado: valores iguais a 1 referem-se à posição deitada do usuário, enquanto 0 refere-se a outras posições. Os valores são reportados por segundo.
+
+- Magnitude Vetorial: movimento vetorial derivado dos dados brutos de aceleração, expresso em Newton-metro.
+
+- Dia: 1 e 2 referem-se ao primeiro e segundo dia de registro de dados, respectivamente.
+
+- Hora: horário do dia em que a batida cardíaca ocorreu (horas:minutos:segundos)
+
+#### saliva.csv -
+concentrações de genes do relógio biológico e hormônios na saliva antes de dormir e ao acordar. Duas amostras por participante estão incluídas, uma antes de dormir e outra ao acordar, conforme indicado na coluna de dados "Amostra". Os níveis de melatonina são apresentados em μg de melatonina por μg de proteína, enquanto os níveis de cortisol são apresentados em μg de cortisol por 100 μg de proteína. Não foram fornecidos dados de concentração de genes do relógio biológico e hormônios para o Usuário_21 devido a um problema nas amostras de saliva que não permitiu a análise.
+
+#### Notas de Uso
+
+Até onde sabemos, o MMASH é o primeiro conjunto de dados a fornecer diversos aspectos da vida cotidiana das pessoas, como respostas cardiovasculares, percepções psicológicas (por exemplo, estresse, ansiedade e emoções), qualidade do sono, informações sobre movimento (por exemplo, dados de acelerômetro de pulso e passos) e descrições de atividades por hora. Devido à complexidade desses dados, especialistas de diversas áreas de pesquisa podem utilizá-los para investigar a relação entre vários aspectos das respostas psicofisiológicas, obtendo uma visão completa da vida diária dos usuários. Por exemplo, é possível investigar a relação entre a qualidade do sono percebida (PSQI) e a observada (por exemplo, melatonina, cortisol, índice de fragmentação do sono e duração do sono) por características individuais, como estresse diário, nível de ansiedade, emoções percebidas ao longo do dia anterior e atividades diárias. Além disso, algoritmos de aprendizado de máquina podem ser desenvolvidos para detectar atividades diárias, humor, emoções, predisposição individual a reagir a eventos aversivos ou positivos e estresse, com base em respostas cardiovasculares (por exemplo, frequência cardíaca e variabilidade da frequência cardíaca) e/ou dados de actigrafia. Esses algoritmos poderiam ser usados ​​para prever a rotina das pessoas utilizando dados de acelerômetros e respostas cardiovasculares que são continuamente registradas por dispositivos de pulso, cada vez mais populares graças aos avanços tecnológicos das últimas duas décadas. Esses são apenas alguns exemplos de todos os possíveis tópicos de pesquisa que poderiam surgir com o uso desse conjunto de dados. A principal razão para o lançamento do MMASH é a dificuldade de coletar esse tipo de dado por um longo período. Esse conjunto de dados proporcionaria a pesquisadores e empresas a oportunidade de obter dados fundamentais sobre diversas respostas psicofisiológicas para desenvolver modelos preditivos e, assim, avaliar passivamente o cotidiano das pessoas por meio de dispositivos de pulso que estimam seu bem-estar.
 
 
