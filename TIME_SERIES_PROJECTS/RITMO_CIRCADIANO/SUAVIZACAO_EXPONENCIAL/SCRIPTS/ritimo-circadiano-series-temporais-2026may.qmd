@@ -519,7 +519,7 @@ Quando o valor da ACF decai de forma muito, muito lenta (como 0.996 -\> 0.990 -\
 
 A análise da função de autocorrelação mostrou que observações consecutivas apresentam elevada dependência temporal, característica esperada em séries fisiológicas de frequência cardíaca. Além disso, a presença de persistência ao longo dos atrasos indica que modelos capazes de atualizar continuamente suas estimativas podem representar adequadamente o comportamento da série. Nesse contexto, optou-se por utilizar métodos de suavização exponencial para modelar e realizar previsões da frequência cardíaca.
 
-### Modelos de Suavização Exponencial
+### Modelagem e Previsão
 
 ***O que é suavização exponencial?***
 
@@ -690,3 +690,7 @@ Logo, o modelo de suavização exponencial simples é o melhor.
 ### Previsão
 
 *Com base no comportamento observado até agora, como será a frequência cardíaca nos próximos instantes?*
+
+
+
+

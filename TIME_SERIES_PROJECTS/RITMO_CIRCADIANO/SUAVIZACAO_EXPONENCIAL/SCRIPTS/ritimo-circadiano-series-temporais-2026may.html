@@ -865,8 +865,8 @@ Autocorrelations of series 'serieHR2', by lag
 <p>Quando o valor da ACF decai de forma muito, muito lenta (como 0.996 -&gt; 0.990 -&gt; 0.982), isso é um forte indício estatístico de que a série temporal possui uma tendência clara ou não é estacionária. O coração passa longos períodos em patamares diferentes (como o período de sono vs.&nbsp;período acordado que vimos no gráfico anterior).</p>
 <p>A análise da função de autocorrelação mostrou que observações consecutivas apresentam elevada dependência temporal, característica esperada em séries fisiológicas de frequência cardíaca. Além disso, a presença de persistência ao longo dos atrasos indica que modelos capazes de atualizar continuamente suas estimativas podem representar adequadamente o comportamento da série. Nesse contexto, optou-se por utilizar métodos de suavização exponencial para modelar e realizar previsões da frequência cardíaca.</p>
 </section>
-<section id="modelos-de-suavização-exponencial" class="level3">
-<h3 class="anchored" data-anchor-id="modelos-de-suavização-exponencial">Modelos de Suavização Exponencial</h3>
+<section id="modelagem-e-previsão" class="level3">
+<h3 class="anchored" data-anchor-id="modelagem-e-previsão">Modelagem e Previsão</h3>
 <p><strong><em>O que é suavização exponencial?</em></strong></p>
 <p>O nome é confuso porque parece que você está suavizando os dados observados. Mas na verdade, você está suavizando a previsão. A Suavização Exponencial pega a oscilação bruta dos dados (cheios de ruído) e extrai o que importa: o nível subjacente (a posição média atual) e, nos modelos mais complexos, a tendência (para onde isso está indo) e a sazonalidade (o padrão cíclico).</p>
 <p>Como a frequência cardíaca oscila bastante, é difícel saber em quantos bpms ela está no momento. “Suavizar” nesse caso seria como achar um ponteiro. Em vez de confiar no valor exato de cada milésimo de segundo, se faz uma média dos últimos segundos para ter uma ideia mais estável e confiável da tendência. Na suavização os dados mais novos contam mais que os dados mais antigos.</p>
